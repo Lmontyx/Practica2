@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es"> <!-- Define el idioma del contenido de la página como español. -->
+<head>
+    <meta charset="UTF-8"> <!-- Establece la codificación de caracteres a UTF-8 para soporte de caracteres especiales. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajusta la vista para dispositivos móviles, asegurando que la página se adapte al ancho del dispositivo y al nivel de zoom inicial. -->
+    <title>Detalles del Pago</title> <!-- Título de la página que aparece en la pestaña del navegador. -->
+    <style>
+        /* Estilo para el cuerpo de la página */
+        body {
+            font-family: 'Arial Black', sans-serif; /* Establece la fuente del texto como Arial Black. */
+            background: linear-gradient(to bottom, #f8f9fa, #0460a6); /* Aplica un degradado de color como fondo del cuerpo. */
+            color: #000000; /* Define el color del texto como negro. */
+            margin: 0; /* Elimina márgenes alrededor del cuerpo. */
+            padding: 20px; /* Añade relleno alrededor del contenido del cuerpo. */
+        }
+        
+        /* Estilo para el encabezado principal */
+        h1 {
+            text-align: center; /* Centra el texto del encabezado. */
+            margin-bottom: 20px; /* Añade margen debajo del encabezado. */
+            color: #000000; /* Define el color del texto del encabezado como negro. */
+        }
+        
+        /* Estilo para los subencabezados */
+        h2 {
+            margin-top: 20px; /* Añade margen superior al subencabezado. */
+            border-bottom: 2px solid #000000; /* Añade una línea debajo del subencabezado. */
+            padding-bottom: 5px; /* Añade relleno debajo del subencabezado. */
+            color: #000000; /* Define el color del texto del subencabezado como negro. */
+        }
+        
+        /* Estilo para los párrafos */
+        p {
+            font-size: 16px; /* Define el tamaño de la fuente para los párrafos. */
+            margin: 10px 0; /* Añade margen arriba y abajo de los párrafos. */
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado principal de la página -->
+    <h1>Detalles del Pago</h1>
+
+    <!-- Sección para los datos del pago -->
+    <h2>Datos del Pago</h2>
+    <p>Monto: {{ pago.monto }}</p> <!-- Muestra el monto del pago -->
+    <p>Fecha: {{ pago.fecha }}</p> <!-- Muestra la fecha del pago -->
+
+    <!-- Sección para los datos de la persona asociada al pago -->
+    <h2>Datos de la Persona</h2>
+    <p>Nombre: {{ pago.persona.nombre }}</p> <!-- Muestra el nombre de la persona -->
+    <p>Apellido: {{ pago.persona.apellido }}</p> <!-- Muestra el apellido de la persona -->
+    <p>Dirección: {{ pago.persona.direccion }}</p> <!-- Muestra la dirección de la persona -->
+    <p>Localidad: {{ pago.persona.localidad }}</p> <!-- Muestra la localidad de la persona -->
+    <p>Teléfono: {{ pago.persona.telefono }}</p> <!-- Muestra el teléfono de la persona -->
+</body>
+</html>

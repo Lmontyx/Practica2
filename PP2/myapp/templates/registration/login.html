@@ -1,0 +1,124 @@
+{% block content %} 
+
+{% load crispy_forms_tags %} <!-- Carga el tag crispy_forms para utilizar en el formulario -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Definición del conjunto de caracteres y de la vista para dispositivos móviles -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Título de la página -->
+    <title>Protectora de Animales</title>
+    
+    <!-- Inclusión de Bootstrap CSS desde una CDN para estilos básicos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Estilo personalizado para centrar el contenido en la página */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Altura completa del viewport */
+            margin: 0; /* Sin márgenes */
+            background: linear-gradient(to bottom, #f8f9fa, #0460a6); /* Degradado de colores de fondo */
+        }
+        
+        /* Estilo para el encabezado */
+        h1 {
+            margin-bottom: 20px; /* Espacio debajo del encabezado */
+        }
+        
+        /* Estilo para el logotipo */
+        .logo {
+            width: 300px; /* Ancho del logotipo */
+            margin-bottom: 30px; /* Espacio debajo del logotipo */
+            border-radius: 33%; /* Bordes redondeados del logotipo */
+        }
+        
+        /* Estilo para la lista de navegación */
+        ul {
+            list-style-type: none; /* Sin viñetas en la lista */
+            padding: 0; /* Sin relleno */
+        }
+        
+        li {
+            display: inline-block; /* Elementos de lista en línea */
+            margin-right: 20px; /* Espacio a la derecha de cada elemento */
+        }
+        
+        /* Estilo para los enlaces de navegación */
+        a {
+            text-decoration: none; /* Sin subrayado en los enlaces */
+            color: #333; /* Color del texto del enlace */
+        }
+        
+        a:hover {
+            color: #555; /* Color del enlace al pasar el mouse */
+        }
+        
+        /* Estilo para el formulario de inicio de sesión */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px; /* Espacio encima del formulario */
+        }
+        
+        /* Estilo para los campos del formulario */
+        input[type="text"],
+        input[type="password"] {
+            width: 300px; /* Ancho de los campos del formulario */
+            padding: 10px; /* Relleno dentro de los campos */
+            margin-bottom: 10px; /* Espacio debajo de los campos */
+            border: 1px solid #ccc; /* Borde de los campos */
+            border-radius: 20px; /* Bordes redondeados de los campos */
+            box-sizing: border-box; /* Incluye el borde y el relleno en el ancho total */
+        }
+        
+        /* Estilo para el botón del formulario */
+        button[type="submit"] {
+            width: 200px; /* Ancho del botón */
+            padding: 10px; /* Relleno dentro del botón */
+            background-color: #007bff; /* Color de fondo del botón */
+            color: #fff; /* Color del texto del botón */
+            border: none; /* Sin borde en el botón */
+            border-radius: 20px; /* Bordes redondeados del botón */
+            cursor: pointer; /* Cursor de mano al pasar sobre el botón */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra alrededor del botón */
+            transform: translateY(0); /* Posición inicial del botón sin desplazamiento */
+            transition: background-color 0.3s ease; /* Transición suave para el cambio de color del fondo */
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #0056b3; /* Color de fondo al pasar el mouse sobre el botón */
+            transform: translateY(-3px); /* Desplazamiento hacia arriba al pasar el mouse */
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        {% load static %} <!-- Carga el tag static para utilizar archivos estáticos -->
+        <!-- Imagen de la Protectora de Animales -->
+        <img src="{% static 'myapp/Protectora 1.bmp' %}" alt="Imagen de la Protectora de Animales" class="img-fluid mx-auto d-block logo">
+        
+        <!-- Título del formulario -->
+        <h5 class="card-title">Ingrese Credenciales</h5>
+        
+        <!-- Formulario de inicio de sesión -->
+        <form method="post">
+            {% csrf_token %} <!-- Token CSRF para seguridad en el envío del formulario -->
+            {{ form | crispy }} <!-- Renderiza el formulario usando crispy-forms para un diseño más estilizado -->
+            <button type="submit">Iniciar Sesión</button> <!-- Botón para enviar el formulario -->
+        </form>
+    </div>
+    
+    <!-- Inclusión de Bootstrap Bundle con Popper desde una CDN para funcionalidades adicionales de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}

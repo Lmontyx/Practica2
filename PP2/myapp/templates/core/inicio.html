@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es"> <!-- Define el idioma del contenido de la página como español. -->
+<head>
+    <meta charset="UTF-8"> <!-- Establece la codificación de caracteres a UTF-8 para soporte de caracteres especiales. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajusta la vista para dispositivos móviles, asegurando que la página se adapte al ancho del dispositivo y al nivel de zoom inicial. -->
+    <title>Protectora de Animales</title> <!-- Título de la página que aparece en la pestaña del navegador. -->
+    <!-- Inclusión de Bootstrap CSS desde una CDN para estilos básicos de la página -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilo personalizado para el cuerpo de la página */
+        body {
+            display: flex; /* Usa Flexbox para la disposición del contenido. */
+            height: 100vh; /* Ocupa toda la altura del viewport. */
+            margin: 0; /* Elimina márgenes alrededor del cuerpo. */
+            font-family: 'Arial Black', sans-serif; /* Establece la fuente del texto. */
+        }
+        
+        /* Estilo para el contenedor de navegación */
+        .nav-container {
+            width: 30%; /* Define el ancho del contenedor de navegación como el 30% del ancho del viewport. */
+            background: linear-gradient(to bottom, #f8f9fa, #0460a6); /* Aplica un degradado de color como fondo del contenedor. */
+            display: flex; /* Usa Flexbox para alinear los elementos dentro del contenedor. */
+            flex-direction: column; /* Dispone los elementos en una columna. */
+            align-items: center; /* Centra los elementos horizontalmente. */
+            justify-content: center; /* Centra los elementos verticalmente. */
+            padding: 20px; /* Añade relleno alrededor del contenido dentro del contenedor. */
+        }
+        
+        /* Estilo para la lista de navegación dentro del contenedor */
+        .nav-container ul {
+            list-style-type: none; /* Elimina viñetas en la lista. */
+            padding: 0; /* Elimina el relleno alrededor de la lista. */
+            width: 100%; /* Establece el ancho de la lista al 100% del contenedor. */
+        }
+        
+        /* Estilo para los elementos de la lista de navegación */
+        .nav-container li {
+            margin: 10px 0; /* Añade margen superior e inferior a cada elemento de la lista. */
+            text-align: center; /* Centra el texto en los elementos de la lista. */
+        }
+        
+        /* Estilo para los enlaces de navegación dentro del contenedor */
+        .nav-container a {
+            display: block; /* Hace que el enlace ocupe todo el ancho disponible. */
+            text-decoration: none; /* Elimina el subrayado del texto del enlace. */
+            color: #fff; /* Define el color del texto del enlace como blanco. */
+            font-family: 'Arial Black', sans-serif; /* Establece la fuente del texto del enlace. */
+            background-color: #004085; /* Define el color de fondo del enlace. */
+            padding: 10px 20px; /* Añade relleno dentro del enlace. */
+            border-radius: 20px; /* Redondea las esquinas del enlace. */
+            transition: background-color 0.3s ease; /* Aplica una transición suave al color de fondo del enlace. */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Aplica una sombra sutil alrededor del enlace. */
+            transform: translateY(0); /* Posiciona el enlace sin desplazamiento vertical inicial. */
+        }
+        
+        /* Estilo para los enlaces de navegación cuando se pasa el cursor sobre ellos */
+        .nav-container a:hover {
+            background-color: #002752; /* Cambia el color de fondo a un azul más oscuro al pasar el cursor. */
+            transform: translateY(-3px); /* Desplaza el enlace ligeramente hacia arriba al pasar el cursor. */
+        }
+        
+        /* Estilo para el contenedor de imagen */
+        .image-container {
+            width: 70%; /* Define el ancho del contenedor de imagen como el 70% del ancho del viewport. */
+            height: 100%; /* Ocupa toda la altura del viewport. */
+            background-image: url("{% static 'myapp/Protectora 2.jpeg' %}"); /* Aplica una imagen de fondo al contenedor. */
+            background-size: cover; /* Escala la imagen para cubrir todo el contenedor. */
+            background-position: center; /* Centra la imagen dentro del contenedor. */
+            background-repeat: no-repeat; /* Evita que la imagen se repita. */
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-container">
+        <!-- Contenedor de navegación con una lista de enlaces -->
+        <ul class="nav flex-column">
+            <!-- Elemento de lista con un enlace a la página de registro y carga de personas -->
+            <li class="nav-item"><a class="nav-link" href="{% url 'persona' %}">Registro y carga de personas</a></li>
+            <!-- Elemento de lista con un enlace para registrar un nuevo usuario -->
+            <li class="nav-item"><a class="nav-link" href="{% url 'reg' %}">Registrar nuevo usuario</a></li>
+            <!-- Elemento de lista con un enlace para cargar pagos -->
+            <li class="nav-item"><a class="nav-link" href="{% url 'seleccionar_persona' %}">Cargar Pago</a></li>
+            <!-- Elemento de lista con un enlace para salir de la sesión -->
+            <li class="nav-item"><a class="nav-link" href="{% url 'exit' %}">Salir</a></li>
+        </ul>
+        {% block content %}
+            {% if request.user.is_authenticated %}
+                <!-- Muestra un mensaje de bienvenida si el usuario está autenticado -->
+                <hr>
+                <h4>Que tengas un buen día {{ user.username }}</h4>
+            {% endif %}
+        {% endblock %}
+    </div>
+    <!-- Contenedor de imagen que ocupa el 70% del ancho del viewport -->
+    <div class="image-container"></div>
+
+    <!-- Inclusión de Bootstrap JavaScript desde una CDN para funcionalidades interactivas adicionales -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

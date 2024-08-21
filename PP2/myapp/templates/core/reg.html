@@ -1,0 +1,128 @@
+{% block content %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"> <!-- Define la codificación de caracteres. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Asegura la adaptabilidad en dispositivos móviles. -->
+    <title>Registrar Usuario - Protectora de Animales</title> <!-- Título de la página en el navegador. -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilo general del cuerpo de la página */
+        body {
+            font-family: 'Arial Black', sans-serif; /* Define la fuente para el texto. */
+            background: linear-gradient(to bottom, #f8f9fa, #0460a6); /* Aplica un degradado de colores como fondo. */
+            height: 100%; /* Asegura que el cuerpo ocupe toda la altura del viewport. */
+            display: flex; /* Usa flexbox para alinear el contenido. */
+            justify-content: center; /* Centra el contenido horizontalmente. */
+            align-items: center; /* Centra el contenido verticalmente. */
+            margin: 0; /* Elimina márgenes alrededor del cuerpo. */
+            padding: 20px; /* Añade relleno alrededor del contenido. */
+        }
+        /* Estilo para la tarjeta de registro */
+        .card {
+            max-width: 500px; /* Define el ancho máximo de la tarjeta. */
+            padding: 20px; /* Añade relleno interno a la tarjeta. */
+            background-color: #fff; /* Establece el color de fondo de la tarjeta. */
+            border-radius: 10px; /* Redondea las esquinas de la tarjeta. */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añade sombra a la tarjeta. */
+            width: 100%; /* Asegura que la tarjeta ocupe todo el ancho dentro del contenedor. */
+        }
+        .card-title {
+            margin-bottom: 20px; /* Añade margen debajo del título de la tarjeta. */
+            color: #0460a6; /* Define el color del texto del título. */
+        }
+        .form-control {
+            margin-bottom: 15px; /* Añade espacio debajo de los campos del formulario. */
+            border-radius: 20px; /* Redondea los bordes de los campos del formulario. */
+            padding: 10px; /* Añade relleno interno a los campos del formulario. */
+        }
+        /* Estilo para los botones */
+        button[type="submit"],
+        .btn-cancel {
+            width: 100%; /* Asegura que los botones ocupen todo el ancho disponible. */
+            padding: 10px; /* Añade relleno interno a los botones. */
+            margin-bottom: 10px; /* Añade margen debajo de los botones. */
+            border: none; /* Elimina el borde de los botones. */
+            border-radius: 20px; /* Redondea las esquinas de los botones. */
+            cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón. */
+            font-family: 'Arial Black', sans-serif; /* Define la fuente para el texto del botón. */
+        }
+        /* Estilo para el botón de envío */
+        button[type="submit"] {
+            background-color: #007bff; /* Define el color de fondo del botón de envío. */
+            color: #fff; /* Define el color del texto del botón de envío. */
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse sobre el botón de envío. */
+        }
+        /* Estilo para el botón de cancelación */
+        .btn-cancel {
+            background-color: #dc3545; /* Define el color de fondo del botón de cancelación. */
+            color: #fff; /* Define el color del texto del botón de cancelación. */
+        }
+        .btn-cancel:hover {
+            background-color: #a71d2a; /* Cambia el color de fondo al pasar el mouse sobre el botón de cancelación. */
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <!-- Mensajes de alerta para notificaciones -->
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }} <!-- Muestra el mensaje de alerta. -->
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> <!-- Botón para cerrar la alerta. -->
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <!-- Mensaje de éxito si el registro fue exitoso -->
+        {% if registration_successful %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                Usuario registrado exitosamente. <!-- Mensaje de éxito. -->
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> <!-- Botón para cerrar la alerta. -->
+            </div>
+        {% endif %}
+        
+        <!-- Contenido de la tarjeta -->
+        <div class="card-body">
+            <h5 class="card-title">Registrar Nuevo Usuario</h5>
+            <!-- Formulario de registro -->
+            <form method="post" id="registerForm">
+                {% csrf_token %} <!-- Token CSRF para prevenir ataques CSRF. -->
+                {{ form|crispy }} <!-- Renderiza el formulario utilizando crispy-forms para un estilo más atractivo. -->
+                <button type="submit" class="btn btn-primary">Registrar</button> <!-- Botón para enviar el formulario. -->
+            </form>
+            <!-- Enlace para cancelar y volver a la página de inicio -->
+            <a href="{% url 'inicio' %}" class="btn btn-cancel">Cancelar</a>
+        </div>
+    </div>
+    
+    <!-- Modal de éxito -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Registro Exitoso</h5> <!-- Título del modal. -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> <!-- Botón para cerrar el modal. -->
+                </div>
+                <div class="modal-body">
+                    El usuario se ha registrado correctamente. <!-- Mensaje dentro del modal. -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="window.location.href=`{% url 'inicio' %}`">Aceptar</button> <!-- Botón para cerrar el modal y redirigir a la página de inicio. -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap Bundle with Popper para funcionalidades de Bootstrap como el modal -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}

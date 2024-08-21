@@ -1,0 +1,165 @@
+{% load static %} <!-- Carga la biblioteca de archivos estáticos de Django para poder usar recursos estáticos como CSS y JavaScript. -->
+<!DOCTYPE html>
+<html lang="es"> <!-- Define el idioma de la página como español. -->
+<head>
+    <!-- Define el conjunto de caracteres y el ajuste de la vista para dispositivos móviles -->
+    <meta charset="UTF-8"> <!-- Establece la codificación de caracteres a UTF-8 para soportar una amplia gama de caracteres. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configura la vista para dispositivos móviles, estableciendo el ancho del viewport y el nivel de zoom inicial. -->
+    
+    <!-- Título de la página -->
+    <title>Protectora de Animales</title> <!-- Define el título que aparecerá en la pestaña del navegador. -->
+    
+    <!-- Inclusión de Bootstrap CSS desde una CDN para proporcionar estilos y componentes predefinidos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Estilo personalizado para el cuerpo del documento */
+        body {
+            font-family: 'Arial Black', sans-serif; /* Establece la fuente del texto en Arial Black. */
+            background: linear-gradient(to bottom, #f8f9fa, #0460a6); /* Aplica un degradado de color de gris claro a azul oscuro como fondo de la página. */
+        }
+        
+        /* Estilo para el contenedor principal */
+        .container {
+            max-width: 800px; /* Define el ancho máximo del contenedor a 800px. */
+            margin: auto; /* Centra el contenedor horizontalmente. */
+            padding: 20px; /* Añade un relleno de 20px alrededor del contenido dentro del contenedor. */
+            background-color: #fff; /* Establece el color de fondo del contenedor como blanco. */
+            border-radius: 10px; /* Redondea las esquinas del contenedor con un radio de 10px. */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aplica una sombra sutil alrededor del contenedor para un efecto de profundidad. */
+        }
+        
+        /* Estilo para los encabezados de nivel 2 y 3 */
+        h2, h3 {
+            text-align: center; /* Centra el texto de los encabezados. */
+            color: #0460a6; /* Define el color del texto de los encabezados como azul oscuro. */
+            margin-bottom: 20px; /* Añade un margen inferior de 20px a los encabezados. */
+        }
+        
+        /* Estilo para los campos del formulario */
+        .form-control {
+            border-radius: 20px; /* Redondea las esquinas de los campos de entrada de texto. */
+            border: 1px solid #ced4da; /* Define un borde gris claro alrededor de los campos de entrada de texto. */
+            padding: 10px; /* Añade un relleno de 10px dentro de los campos de entrada de texto. */
+        }
+        
+        /* Estilo para los botones primarios */
+        .btn-primary {
+            background-color: #007bff; /* Define el color de fondo de los botones primarios como azul. */
+            border: none; /* Elimina el borde predeterminado de los botones. */
+            border-radius: 20px; /* Redondea las esquinas de los botones primarios. */
+            margin: 10px; /* Añade un margen de 10px alrededor de los botones primarios. */
+        }
+        
+        .btn-primary:hover {
+            background-color: #0056b3; /* Cambia el color de fondo de los botones primarios al pasar el cursor sobre ellos a un azul más oscuro. */
+        }
+        
+        /* Estilo para los botones secundarios */
+        .btn-secondary {
+            background-color: #6c757d; /* Define el color de fondo de los botones secundarios como gris. */
+            color: #fff; /* Define el color del texto de los botones secundarios como blanco. */
+            border-radius: 20px; /* Redondea las esquinas de los botones secundarios. */
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268; /* Cambia el color de fondo de los botones secundarios al pasar el cursor sobre ellos a un gris más oscuro. */
+        }
+        
+        /* Estilo para la tabla */
+        table {
+            width: 100%; /* Define que la tabla ocupe el 100% del ancho del contenedor. */
+            margin-top: 20px; /* Añade un margen superior de 20px para separar la tabla del contenido superior. */
+        }
+        
+        thead th {
+            background-color: #004085; /* Define el color de fondo de los encabezados de la tabla como azul muy oscuro. */
+            color: #fff; /* Define el color del texto de los encabezados de la tabla como blanco. */
+            text-align: center; /* Centra el texto de los encabezados de la tabla. */
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2; /* Aplica un color de fondo gris claro a las filas pares del cuerpo de la tabla para alternar el color de fondo. */
+        }
+        
+        tbody td {
+            vertical-align: middle; /* Centra verticalmente el contenido de las celdas. */
+            text-align: center; /* Centra horizontalmente el contenido de las celdas. */
+        }
+        
+        /* Estilo para los botones informativos y peligrosos */
+        .btn-info {
+            margin: 5px; /* Añade un margen de 5px alrededor de los botones informativos. */
+            border-radius: 20px; /* Redondea las esquinas de los botones informativos. */
+        }
+        
+        .btn-danger {
+            margin: 5px; /* Añade un margen de 5px alrededor de los botones peligrosos. */
+            border-radius: 20px; /* Redondea las esquinas de los botones peligrosos. */
+        }
+    </style>
+</head>
+<body>
+    <div class="container"> <!-- Contenedor principal para centralizar el contenido y aplicar estilos. -->
+        <h2>Buscar Pagos</h2> <!-- Título principal para la sección de búsqueda de pagos. -->
+        <form method="get" class="text-center"> <!-- Formulario para realizar búsquedas, centrado en la página. -->
+            <input type="text" name="search" placeholder="Buscar por nombre" value="{{ request.GET.search }}" class="form-control"> <!-- Campo de entrada para buscar pagos por nombre, con un valor predeterminado si se realizó una búsqueda anterior. -->
+            <button type="submit" class="btn btn-primary">Buscar</button> <!-- Botón para enviar el formulario de búsqueda, estilizado como botón primario. -->
+            <a href="{% url 'seleccionar_persona' %}" class="btn btn-secondary">Volver</a> <!-- Enlace para volver a la página anterior, estilizado como botón secundario. -->
+        </form>
+
+        <h3 class="text-center mt-4">Pagos Encontrados</h3> <!-- Título para la lista de pagos encontrados, centrado con margen superior. -->
+        <table class="table table-striped"> <!-- Tabla con estilos de Bootstrap para filas rayadas alternas. -->
+            <thead>
+                <tr>
+                    <th>Persona</th> <!-- Encabezado de columna para el nombre de la persona asociada al pago. -->
+                    <th>Monto</th> <!-- Encabezado de columna para el monto del pago. -->
+                    <th>Fecha</th> <!-- Encabezado de columna para la fecha del pago. -->
+                    <th>Acción</th> <!-- Encabezado de columna para las acciones disponibles (como generar PDF o eliminar). -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for pago in pagos %} <!-- Itera sobre la lista de pagos para crear una fila por cada pago. -->
+                <tr>
+                    <td>{{ pago.persona.nombre }} {{ pago.persona.apellido }}</td> <!-- Muestra el nombre y apellido de la persona asociada al pago. -->
+                    <td>{{ pago.monto }}</td> <!-- Muestra el monto del pago. -->
+                    <td>{{ pago.fecha }}</td> <!-- Muestra la fecha del pago. -->
+                    <td>
+                        <a href="{% url 'generar_pdf' pago.id %}" class="btn btn-info btn-sm">Generar PDF</a> <!-- Enlace para generar un PDF del pago, estilizado como botón informativo pequeño. -->
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ pago.id }}">Eliminar</button> <!-- Botón para eliminar el pago, que abre un modal de confirmación al hacer clic, estilizado como botón peligroso pequeño. -->
+                        
+                        <!-- Modal de confirmación -->
+                        <div class="modal fade" id="deleteModal{{ pago.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true"> <!-- Modal para confirmar la eliminación del pago, con un identificador único para cada pago. -->
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5> <!-- Título del modal que indica la acción a confirmar. -->
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> <!-- Botón para cerrar el modal sin realizar cambios. -->
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Estás seguro de que deseas eliminar este pago? <!-- Mensaje de confirmación dentro del modal. -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="{% url 'eliminar_pago' pago.id %}" method="post"> <!-- Formulario para enviar la solicitud de eliminación del pago. -->
+                                            {% csrf_token %} <!-- Token CSRF para evitar ataques de falsificación de solicitudes entre sitios. -->
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button> <!-- Botón para cancelar la eliminación y cerrar el modal. -->
+                                            <button type="submit" class="btn btn-danger">Confirmar</button> <!-- Botón para confirmar y enviar la solicitud de eliminación. -->
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %} <!-- Si no hay pagos en la lista, muestra esta fila. -->
+                <tr>
+                    <td colspan="4" class="text-center">No se encontraron pagos.</td> <!-- Mensaje que indica que no se encontraron pagos, ocupando todas las columnas de la tabla. -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Inclusión del archivo JavaScript de Bootstrap para habilitar funcionalidades interactivas como los modales. -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"> <!-- Establece la codificación de caracteres a UTF-8. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajusta la vista para dispositivos móviles. -->
+    <title>Personas Registradas - Protectora de Animales</title> <!-- Título de la página que aparece en la pestaña del navegador. -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilo personalizado para centrar el contenido */
+        body {
+            text-align: center; /* Centra el texto en todo el cuerpo. */
+            background: linear-gradient(to bottom, #f8f9fa, #0460a6); /* Degradado de colores de fondo. */
+            margin: 0; /* Elimina márgenes alrededor del cuerpo. */
+            padding: 20px; /* Añade relleno alrededor del contenido del cuerpo. */
+        }
+        
+        /* Estilo para el encabezado */
+        h2 {
+            margin-bottom: 20px; /* Añade margen debajo del encabezado. */
+        }
+
+        /* Estilo para el contenedor del formulario */
+        .form-container {
+            display: flex; /* Usa flexbox para el diseño. */
+            flex-direction: column; /* Organiza los elementos en una columna. */
+            align-items: center; /* Centra los elementos horizontalmente. */
+            margin-bottom: 20px; /* Añade margen debajo del contenedor. */
+        }
+
+        /* Estilo para los campos del formulario */
+        input[type="text"] {
+            width: 100%; /* Hace que el campo de texto ocupe todo el ancho disponible. */
+            max-width: 400px; /* Define el ancho máximo del campo de texto. */
+            padding: 10px; /* Añade relleno interno al campo de texto. */
+            margin-bottom: 10px; /* Añade margen debajo del campo de texto. */
+            border: 1px solid #ccc; /* Define un borde delgado y gris. */
+            border-radius: 20px; /* Redondea las esquinas del borde. */
+            box-sizing: border-box; /* Incluye el borde y el relleno en el ancho total del campo de texto. */
+        }
+
+        /* Estilo para el botón del formulario */
+        button[type="submit"] {
+            width: 100%; /* Hace que el botón ocupe todo el ancho disponible. */
+            max-width: 400px; /* Define el ancho máximo del botón. */
+            padding: 10px; /* Añade relleno interno al botón. */
+            background-color: #007bff; /* Define el color de fondo del botón. */
+            color: #fff; /* Define el color del texto del botón como blanco. */
+            border: none; /* Elimina el borde del botón. */
+            border-radius: 20px; /* Redondea las esquinas del botón. */
+            cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón. */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Añade sombra al botón. */
+            transform: translateY(0); /* Inicialmente, sin desplazamiento. */
+            transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo. */
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse sobre el botón. */
+            transform: translateY(-3px); /* Desplaza ligeramente hacia arriba al pasar el mouse. */
+        }
+
+        /* Estilo para el contenedor de la tabla */
+        .table-container {
+            max-height: 400px; /* Altura máxima del contenedor de la tabla. */
+            overflow-y: auto; /* Añade un scrollbar vertical si es necesario. */
+            overflow-x: hidden; /* Oculta el scrollbar horizontal. */
+        }
+
+        /* Estilo para la tabla */
+        .table {
+            width: 100%; /* Hace que la tabla ocupe todo el ancho disponible. */
+            margin-bottom: 0; /* Elimina el margen inferior de la tabla. */
+        }
+        .table th, .table td {
+            text-align: center; /* Centra el texto en las celdas de la tabla. */
+        }
+        .pagination {
+            margin-top: 20px; /* Añade margen superior a la paginación. */
+        }
+
+        /* Estilo para los botones de acciones en la tabla */
+        .btn-sm {
+            font-size: 0.75rem; /* Tamaño de fuente más pequeño para los botones. */
+            padding: 0.25rem 0.5rem; /* Ajusta el relleno de los botones. */
+            border-radius: 0.2rem; /* Radio del borde más pequeño para los botones. */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Alta de Persona</h2>
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }} <!-- Renderiza el formulario con el estilo crispy de crispy-forms. -->
+                <button type="submit" class="btn btn-primary">Guardar</button> <!-- Botón para enviar el formulario de registro. -->
+            </form>
+        </div>
+
+        <h2 class="mt-4">Personas Registradas</h2>
+        <!-- Formulario de búsqueda -->
+        <div class="form-container">
+            <form method="get">
+                <input type="text" name="search" placeholder="Buscar por nombre o apellido" value="{{ request.GET.search }}"> <!-- Campo de búsqueda con valor inicial. -->
+                <button type="submit" class="btn btn-primary">Buscar</button> <!-- Botón para enviar el formulario de búsqueda. -->
+            </form>
+        </div>
+
+        <!-- Tabla de personas -->
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Dirección</th>
+                        <th>Localidad</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for persona in personas %}
+                    <tr>
+                        <td>{{ persona.nombre }}</td>
+                        <td>{{ persona.apellido }}</td>
+                        <td>{{ persona.direccion }}</td>
+                        <td>{{ persona.localidad }}</td>
+                        <td>{{ persona.telefono }}</td>
+                        <td>
+                            <a href="{% url 'modificar_persona' persona.id %}" class="btn btn-warning btn-sm">Mod</a> <!-- Enlace para modificar la persona. -->
+                            <a href="{% url 'eliminar_persona' persona.id %}" class="btn btn-danger btn-sm">Elim</a> <!-- Enlace para eliminar la persona. -->
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">No se encontraron personas.</td> <!-- Mensaje cuando no hay personas en la tabla. -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botón de volver -->
+        <a href="{% url 'inicio' %}" class="btn btn-secondary mt-4">Volver</a> <!-- Enlace para volver a la página de inicio. -->
+    </div>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
